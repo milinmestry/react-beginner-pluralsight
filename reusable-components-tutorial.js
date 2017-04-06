@@ -2,9 +2,32 @@
 // write code here and click the execute button
 // mountNode.innerHTML="MMMM"
 
-const Button = function(props) {
-	return (
-  	<button>{props.label}</button>
-  );
-};
-ReactDOM.render(<Button label="Click me" />, mountNode);
+class Button extends React.Component {
+
+	constructor(props) {
+  	super(props)
+  	this.state = {counter: 0}
+	}
+
+  handleClick = () => {
+    // To avoid race-condition use prevState property.
+  	this.setState((prevState) => ({
+  	   counter: prevState.counter + 1
+  	}));
+
+    // The below code cannot handle race-condition
+  	// this.setState({
+  	// counter: this.state.counter + 1
+  	// });
+  };
+
+  render() {
+  	return (
+    	<button onClick={this.handleClick}>
+      	Click
+      </button>
+    )
+  }
+}
+
+ReactDOM.render(<Button />, mountNode);
