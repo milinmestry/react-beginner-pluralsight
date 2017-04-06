@@ -13,19 +13,6 @@ const Card = (props) => {
   );
 };
 
-let cardsData = [
-  {
-    name: "Chris Wanstrath",
-    avatar_url: "https://avatars3.githubusercontent.com/u/2?v=3",
-    company: "Github",
-  },
-  {
-    name: "Yehuda Katz",
-    avatar_url: "https://avatars3.githubusercontent.com/u/4?v=3",
-    company: "Tilde, Inc.",
-  }
-]
-
 const CardList = (props) => {
   return (
     <div>
@@ -34,4 +21,47 @@ const CardList = (props) => {
   );
 };
 
-ReactDOM.render(<CardList cards={cardsData} />, mountNode);
+class Form extends React.Component {
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Form submitted. | ", this.userNameInput.value);
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input type="text"
+          ref={(input) => this.userNameInput = input}
+          placeholder="GitHub username" required />
+        <button type="submit">Add Card</button>
+      </form>
+    )
+  }
+}
+
+class App extends React.Component {
+  state = {
+    cardsData: [
+      {
+        name: "Chris Wanstrath",
+        avatar_url: "https://avatars3.githubusercontent.com/u/2?v=3",
+        company: "Github",
+      },
+      {
+        name: "Yehuda Katz",
+        avatar_url: "https://avatars3.githubusercontent.com/u/4?v=3",
+        company: "Tilde, Inc.",
+      }
+    ]
+  }
+  render() {
+    return (
+      <div>
+        <Form />
+        <CardList cards={this.state.cardsData} />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, mountNode);
