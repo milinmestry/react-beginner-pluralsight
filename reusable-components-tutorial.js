@@ -4,30 +4,45 @@
 
 class Button extends React.Component {
 
-	constructor(props) {
-  	super(props)
-  	this.state = {counter: 0}
-	}
-
-  handleClick = () => {
-    // To avoid race-condition use prevState property.
-  	this.setState((prevState) => ({
-  	   counter: prevState.counter + 1
-  	}));
-
-    // The below code cannot handle race-condition
-  	// this.setState({
-  	// counter: this.state.counter + 1
-  	// });
-  };
+  // handleClick = () => {
+  //   // To avoid race-condition use prevState property.
+  // 	this.setState((prevState) => ({
+  // 	   counter: prevState.counter + 1
+  // 	}));
+  // };
 
   render() {
   	return (
-    	<button onClick={this.handleClick}>
-      	{this.state.counter}
+    	<button onClick={this.props.onClickFunction}>
+      	+1
       </button>
     )
   }
 }
 
-ReactDOM.render(<Button />, mountNode);
+const Result = (props) => {
+	return(
+  	<div>{props.counter}</div>
+  )
+}
+
+class App extends React.Component {
+	state = {counter: 0};
+
+  incrementCounter = () => {
+  	this.setState((prevState) => ({
+    	counter: prevState.counter + 1
+    }));
+  }
+
+	render() {
+		return (
+    	<div>
+      	<Button onClickFunction={this.incrementCounter} />
+        <Result counter={this.state.counter} />
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, mountNode);
