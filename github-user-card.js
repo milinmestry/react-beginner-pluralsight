@@ -16,7 +16,7 @@ const Card = (props) => {
 const CardList = (props) => {
   return (
     <div>
-      {props.cards.map(card => <Card {...card}/>)}
+      {props.cards.map(card => <Card key={card.id} {...card}/>)}
     </div>
   );
 };
@@ -26,11 +26,14 @@ class Form extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted. | ", this.state.userName);
+    // console.log("Form submitted. | ", this.state.userName);
     axios.get(`https://api.github.com/users/${this.state.userName}`)
-      .then(resp => {
-        console.log(resp);
-      });
+    .then(resp => {
+      this.props.onSubmit(resp.data);
+      this.setState({userName: ''});
+    }).catch(function (error) {
+      console.log(error);
+    });
   };
 
   render() {
@@ -48,23 +51,20 @@ class Form extends React.Component {
 
 class App extends React.Component {
   state = {
-    cardsData: [
-      {
-        name: "Chris Wanstrath",
-        avatar_url: "https://avatars3.githubusercontent.com/u/2?v=3",
-        company: "Github",
-      },
-      {
-        name: "Yehuda Katz",
-        avatar_url: "https://avatars3.githubusercontent.com/u/4?v=3",
-        company: "Tilde, Inc.",
-      }
-    ]
+    cardsData: []
   }
+
+  addNewCard = (cardInfo) => {
+    // console.log(cardInfo);
+    this.setState(prevState => ({
+      cardsData: prevState.cardsData.concat(cardInfo)
+    }));
+  }
+
   render() {
     return (
       <div>
-        <Form />
+        <Form onSubmit={this.addNewCard} />
         <CardList cards={this.state.cardsData} />
       </div>
     );
