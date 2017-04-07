@@ -1,14 +1,11 @@
 const Stars = (props) => {
   const numberofStars = 1 + Math.floor(Math.random()*9)
 
-  let stars = []
-  for (let i=0; i<numberofStars; i++) {
-    stars.push(<i key={i} className="fa fa-star"></i>)
-  }
-
   return(
     <div className="col-5">
-      {stars}
+      {_.range(numberofStars).map(i =>
+        <i key={i} className="fa fa-star"></i>
+      )}
     </div>
   );
 }
@@ -24,7 +21,8 @@ const Button = (props) => {
 const Answer = (props) => {
   return(
     <div className="col-5">
-      ...
+      <span>5</span>
+      <span>9</span>
     </div>
   );
 }
@@ -32,12 +30,15 @@ const Answer = (props) => {
 const Numbers = (props) => {
   return(
     <div className="card text-center">
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
+      {Numbers.list.map((number, i) =>
+        <span key={i}>{number}</span>
+      )}
     </div>
   );
 }
+
+// Reusable number list
+Numbers.list = _.range(1, 10);
 
 class Game extends React.Component {
   render() {
