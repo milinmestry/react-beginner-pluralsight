@@ -27,7 +27,7 @@ class Form extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Form submitted. | ", this.state.userName);
-    axios.get('https://api.github.com/users/${this.state.userName}')
+    axios.get(`https://api.github.com/users/${this.state.userName}`)
       .then(resp => {
         console.log(resp);
       });
