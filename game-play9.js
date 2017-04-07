@@ -37,8 +37,9 @@ const Button = (props) => {
     <div className="col-2">
       {button}
       <br /><br />
-      <button className="btn sm-btn btn-warning" onClick={props.redraw}>
-        <i className="fa fa-refresh"></i>
+      <button className="btn sm-btn btn-warning" onClick={props.redraw}
+        disabled={props.redraws === 0}>
+        <i className="fa fa-refresh"></i> {props.redraws}
       </button>
     </div>
   );
@@ -56,16 +57,18 @@ const Answer = (props) => {
 
 const Numbers = (props) => {
   const numberClassName = (number) => {
+    let klass = 'badge';
     if (props.usedNumbers.indexOf(number) >= 0) {
-      return 'used';
+      return 'used ' + klass;
     }
     if (props.selectedNumbers.indexOf(number) >= 0) {
-      return 'selected';
+      return 'selected ' + klass;
     }
+    return klass;
   };
 
   return(
-    <div className="card text-center">
+    <div className="breadcrumb text-center">
       {Numbers.list.map((number, i) =>
         <span key={i} className={numberClassName(number)}
           onClick={() => props.selectNumer(number)}>
@@ -76,20 +79,32 @@ const Numbers = (props) => {
   );
 }
 
+const DoneFrame = (props)  => {
+  return (
+    <div className="text-center">
+      <h2>{props.doneStatus}</h2>
+    </div>
+  );
+};
+
 // Reusable number list
 Numbers.list = _.range(1, 10);
 
 class Game extends React.Component {
+  static randomNumber = () => 1 + Math.floor(Math.random()*9);
   state = {
     selectedNumbers: [],
-    randomNumberofStars: 1 + Math.floor(Math.random()*9),
+    randomNumberofStars: Game.randomNumber(),
     usedNumbers: [],
     answerIsCorrect: null,
+    redraws: 5,
+    doneStatus: "Game over!",
   }
 
   selectNumer = (clickedNumber) => {
     // Prevent clicking on Numbers again and again
     if (this.state.selectedNumbers.indexOf(clickedNumber) >= 0) { return; }
+    if (this.state.usedNumbers.indexOf(clickedNumber) >= 0) { return; }
     this.setState(prevState => ({
       answerIsCorrect: null,
       selectedNumbers: prevState.selectedNumbers.concat(clickedNumber)
@@ -116,15 +131,17 @@ class Game extends React.Component {
       usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
       selectedNumbers: [],
       answerIsCorrect: null,
-      randomNumberofStars: 1 + Math.floor(Math.random()*9),
+      randomNumberofStars: Game.randomNumber(),
     }));
   };
 
   redrawGame = () => {
+    if (this.state.redraws === 0) { return; }
     this.setState(prevState => ({
       selectedNumbers: [],
       answerIsCorrect: null,
-      randomNumberofStars: 1 + Math.floor(Math.random()*9),
+      randomNumberofStars: Game.randomNumber(),
+      redraws: prevState.redraws - 1,
     }));
   };
 
@@ -134,6 +151,8 @@ class Game extends React.Component {
       selectedNumbers,
       answerIsCorrect,
       usedNumbers,
+      redraws,
+      doneStatus,
     } = this.state;
 
     return (
@@ -142,18 +161,24 @@ class Game extends React.Component {
         <hr />
         <div className="row">
           <Stars numberofStars={randomNumberofStars} />
+
           <Button selectedNumbers={selectedNumbers}
             checkAnswer={this.checkAnswer}
             acceptAnswer={this.acceptAnswer}
             redraw={this.redrawGame}
-            answerIsCorrect={answerIsCorrect} />
+            answerIsCorrect={answerIsCorrect}
+            redraws={redraws} />
+
           <Answer selectedNumbers={selectedNumbers}
             unselectNumer={this.unselectNumer} />
         </div>
         <br />
-        <Numbers selectedNumbers={selectedNumbers}
-          selectNumer={this.selectNumer}
-          usedNumbers={usedNumbers} />
+        {doneStatus
+          ? <DoneFrame doneStatus={doneStatus} />
+          : <Numbers selectedNumbers={selectedNumbers}
+              selectNumer={this.selectNumer}
+              usedNumbers={usedNumbers} />
+        }
       </div>
     );
   }

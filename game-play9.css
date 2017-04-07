@@ -12,16 +12,17 @@
 span {
 	display: inline-block;
 	margin: 0.5em;
-  background-color: #ccc;
+  background-color: #666;
+  color: #fff;
   text-align: center;
   width: 24px;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   cursor: pointer;
 }
 
 .selected {
-	background-color: #eee;
-  color: #ddd;
+	background-color: #ccc;
+  color: #999;
   cursor: not-allowed;
 }
 
