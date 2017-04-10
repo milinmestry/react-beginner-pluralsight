@@ -1,12 +1,18 @@
 #mountNode {
   color: #000;
-  background-color: #cda;
+  background-color: #AFDCEC;
   padding: 20px;
+}
+
+.heading {
+	font-weight:bolder;
+  color: #2B3856;
 }
 
 .fa-star {
 	margin: 0.5em;
   font-size: 24px;
+  color: #2B3856;
 }
 
 span {

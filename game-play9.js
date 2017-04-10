@@ -70,7 +70,7 @@ const Answer = (props) => {
   return(
     <div className="col-5">
     {props.selectedNumbers.map((number, i) =>
-      <span key={i} onClick={() => props.unselectNumer(number)}>{number}</span>
+      <span className="badge" key={i} onClick={() => props.unselectNumer(number)}>{number}</span>
     )}
     </div>
   );
@@ -200,7 +200,7 @@ class Game extends React.Component {
 
     return (
       <div className="container">
-        <h3>Play Nine</h3>
+        <h3 className="heading">Play Nine</h3>
         <hr />
         <div className="row">
           <Stars numberofStars={randomNumberofStars} />
