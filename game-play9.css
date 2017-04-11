@@ -1,6 +1,21 @@
+body {
+  background-color: #E5E4E2;
+}
+
+hr {
+	background-color: #87AFC7;
+  height: 1px;
+}
+
 #mountNode {
   color: #000;
   background-color: #AFDCEC;
+  padding: 20px;
+}
+
+.game-help {
+  color: #2B3856;
+  background-color: #91BECE;
   padding: 20px;
 }
 
@@ -15,15 +30,23 @@
   color: #2B3856;
 }
 
+.bronze {
+  color: #CD7F32;
+}
+
 span {
 	display: inline-block;
 	margin: 0.5em;
-  background-color: #666;
+  background-color: #2B3856;
   color: #fff;
   text-align: center;
   width: 24px;
   /*border-radius: 50%;*/
   cursor: pointer;
+}
+
+.badge {
+  font-size: 100%;
 }
 
 .selected {

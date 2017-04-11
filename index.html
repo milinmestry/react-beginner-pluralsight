@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Game Play Nine</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="game-play9.css">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 game-help">
+          <div class="page-header">
+          <h3>Game Help</h3><hr />
+          <p class="lead">
+            The game is simple, used all the numbers from the tray to match the
+            number of stars. When the page loads it will display the star(s)
+            and you have to click on number(s) for the count of star(s).
+            For Example, if the stars appears 7, and you can select number 7 or
+            numbers 5 + 2 or 4 + 3 or 6 + 1; depending upong how many Numbers
+            are available in the numbers tray. Keep in mind that once you matched
+            the number(s) with star(s), then those number(s) is/are marked as used,
+            and will be disabled in the numbers tray.<br /><br />
+
+            You can use 5 refreshes to see the next stars on the page, this may
+            help you to win the game when you are out of certains numbers.
+          </p>
+        </div>
+        </div>
+        <div class="col-md-6" id="mountNode"></div>
+      </div>
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://jscomplete.com/assets/jsc-vendor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.min.js" integrity="sha256-GD3ItO3la9UgSsiiVIn1briRJCxizFqORPaIveATvcI=" crossorigin="anonymous"></script>
+    <script src="game-play9.js" type="text/jsx"></script>
+  </body>
+</html>
