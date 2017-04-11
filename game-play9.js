@@ -20,10 +20,15 @@ var possibleCombinationSum = function(arr, n) {
 
 
 const Stars = (props) => {
+  let starBgColor = 'fa fa-star';
+  if (props.refreshButtonClicked === true) {
+    starBgColor += ' bronze';
+  }
+
   return(
     <div className="col-5">
       {_.range(props.numberofStars).map(i =>
-        <i key={i} className="fa fa-star"></i>
+        <i key={i} className={starBgColor}></i>
       )}
     </div>
   );
@@ -55,14 +60,7 @@ const Button = (props) => {
   }
 
   return(
-    <div className="col-2">
-      {button}
-      <br /><br />
-      <button className="btn sm-btn btn-warning" onClick={props.redraw}
-        disabled={props.redraws === 0}>
-        <i className="fa fa-refresh"></i> {props.redraws}
-      </button>
-    </div>
+    <div className="col-2">{button}</div>
   );
 }
 
@@ -109,6 +107,27 @@ const DoneFrame = (props)  => {
   );
 };
 
+const ButtonRefresh = (props) => {
+  let button =
+  <button className="btn btn-sm btn-warning" onClick={props.redraw}
+    disabled={props.redraws === 0}><i className="fa fa-refresh"></i>
+  </button>;
+
+  if (props.redraws === 0) {
+    button = <button className="btn btn-sm btn-secondary" onClick={props.resetGame}>Play again?</button>
+  }
+
+  return (
+      <div className="col-md-12">
+        <div className="breadcrumb">
+        You have <kbd>{props.redraws}</kbd> life remains, click to refresh
+        &nbsp;&nbsp;&nbsp;
+        {button}
+      </div>
+    </div>
+  );
+};
+
 // Reusable number list
 Numbers.list = _.range(1, 10);
 
@@ -121,6 +140,7 @@ class Game extends React.Component {
     answerIsCorrect: null,
     redraws: 5,
     doneStatus: null,
+    refreshButtonClicked: null,
   });
 
   state = Game.initialState();
@@ -147,7 +167,8 @@ class Game extends React.Component {
   checkAnswer = () => {
     this.setState(prevState => ({
       answerIsCorrect: prevState.randomNumberofStars ===
-        prevState.selectedNumbers.reduce((acc, n) => acc + n, 0)
+        prevState.selectedNumbers.reduce((acc, n) => acc + n, 0),
+      refreshButtonClicked: null,
     }));
   };
 
@@ -167,6 +188,7 @@ class Game extends React.Component {
       answerIsCorrect: null,
       randomNumberofStars: Game.randomNumber(),
       redraws: prevState.redraws - 1,
+      refreshButtonClicked: true,
     }), this.updateDoneStatus);
   };
 
@@ -196,6 +218,7 @@ class Game extends React.Component {
       usedNumbers,
       redraws,
       doneStatus,
+      refreshButtonClicked,
     } = this.state;
 
     return (
@@ -203,7 +226,13 @@ class Game extends React.Component {
         <h3 className="heading">Play Nine</h3>
         <hr />
         <div className="row">
-          <Stars numberofStars={randomNumberofStars} />
+          <ButtonRefresh
+            redraws={redraws}
+            redraw={this.redrawGame}
+            resetGame={this.resetGame} />
+
+          <Stars numberofStars={randomNumberofStars}
+            refreshButtonClicked={refreshButtonClicked} />
 
           <Button selectedNumbers={selectedNumbers}
             checkAnswer={this.checkAnswer}

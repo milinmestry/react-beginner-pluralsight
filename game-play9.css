@@ -60,3 +60,7 @@ span {
   color: #9b9;
   cursor: not-allowed;
 }
+
+.col-5, .col-2 {
+  min-height: 150px;
+}
